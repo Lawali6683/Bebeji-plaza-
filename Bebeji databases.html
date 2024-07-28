@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bebeji Database</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+        }
+
+        header {
+            background-color: #4267b2;
+            padding: 1rem;
+            color: white;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        #search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        #search-container input {
+            width: 50%;
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 0.5rem;
+        }
+
+        #search-container button {
+            padding: 0.5rem 1rem;
+            background-color: #4267b2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #search-container button:hover {
+            background-color: #365899;
+        }
+
+        #display-certificate-data {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="Bebeji database.html">Database</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="search-container">
+            <input type="text" id="search-input" placeholder="Search by email, username, shop number, or phone number">
+            <button id="search-button">Search</button>
+        </section>
+        <section id="display-certificate-data">
+            <!-- Certificate data will be displayed here -->
+        </section>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+    fetch('/api/certificates')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const displayContainer = document.getElementById('display-certificate-data');
+            if (data.length > 0) {
+                displayContainer.innerHTML = `
+                    <h2>Certificate Details</h2>
+                    ${data.map(cert => `
+                        <div>
+                            <p>Seller Name: ${cert.sellerInfo.fullName}</p>
+                            <p>Shop Number: ${cert.sellerInfo.shopNumber}</p>
+                            <p>Business Name: ${cert.sellerInfo.businessName}</p>
+                            <p>Email: ${cert.sellerInfo.email}</p>
+                            <p>Phone: ${cert.sellerInfo.phone}</p>
+                            <p>Customer Name: ${cert.buyerDetails.fullName}</p>
+                            <p>Gender: ${cert.buyerDetails.gender}</p>
+                            <p>Customer Email: ${cert.buyerDetails.email}</p>
+                            <p>Customer Phone: ${cert.buyerDetails.phone}</p>
+                            <p>Address: ${cert.buyerDetails.address}</p>
+                            <p>Diverse Name: ${cert.buyerDetails.diverseName}</p>
+                            <p>Diverse IP: ${cert.buyerDetails.diverseIp}</p>
+                            <p>Date: ${cert.buyerDetails.date}</p>
+                            <p>Product Price: ${cert.buyerDetails.productPrice}</p>
+                        </div>
+                        <hr>
+                    `).join('')}
+                `;
+            } else {
+                displayContainer.innerHTML = '<p>No certificate data found.</p>';
+            }
+        })
+        .catch(error => console.error('Error fetching data:', error));
+});
+
+document.getElementById('search-button').addEventListener('click', () => {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    const displayContainer = document.getElementById('display-certificate-data');
+    displayContainer.innerHTML = '';
+
+    fetch(`/api/certificate/search?query=${searchInput}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.length > 0) {
+                displayContainer.innerHTML = data.map(result => `<p>${result.slipContent}</p>`).join('');
+            } else {
+                displayContainer.innerHTML = '<p>No certificate found for the entered information.</p>';
+            }
+        })
+        .catch(error => console.error('Error searching data:', error));
+});
+
+function copyCertificateData(certificate) {
+    fetch('/api/certificate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(certificate)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => console.log('Certificate saved:', data))
+    .catch(error => console.error('Error saving certificate:', error));
+}
+
+copyCertificateData({
+    sellerInfo: {
+        fullName: 'New User',
+        shopNumber: '103',
+        businessName: 'New Business',
+        email: 'newuser@example.com',
+        phone: '555-9876'
+    },
+    buyerDetails: {
+        fullName: 'Buyer Name',
+        gender: 'Male',
+        email: 'buyer@example.com',
+        phone: '555-5555',
+        address: '123 Street Name',
+        diverseName: 'Diverse Name',
+        diverseIp: '192.168.0.1',
+        productPrice: '500'
+     }
+});
+</script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const certificateData = localStorage.getItem('certificateData');
+    if (certificateData) {
+        document.getElementById('display-certificate-data').innerHTML = JSON.parse(certificateData);
+    }
+});
+    </script>
+    <script src="server.js"></script> 
+</body>
+</html>

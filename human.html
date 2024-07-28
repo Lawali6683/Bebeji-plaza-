@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Rights Reports</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-shadow: 0px 0px 1px white;
+            text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            background-color: #5bff15;
+            color: #fff;
+            padding: 7px 0;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #3115ff;
+            text-decoration: none;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        nav ul li a:hover {
+            color: #ddd;
+        }
+
+        .main {
+            padding: 20px;
+        }
+
+        .report-section {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px auto;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#" id="phoneTrackingReportBtn"><i class="fas fa-mobile-alt"></i> Phone Report</a></li>
+                <li><a href="#" id="reportsCivilBtn"><i class="fas fa-file-alt"></i> Reports</a></li>
+                <li><a href="#" id="deletePostBtn"><i class="fas fa-trash"></i> Delete Post</a></li>
+            <li><a href="Bebeji databases.html" ><i class="fas fa-file-alt"></i> Database Serch</a></li>   
+            </ul>
+        </nav>
+    </header>
+
+    <main id="content">
+        <section id="phoneTrackingSection" class="report-section">
+            <h2>Phone Report</h2>
+            <div id="display-report-data"></div>
+        </section>
+        <section id="display-images">
+        <section id="reportsCivilSection" class="report-section hidden">
+            <button id="backToMainBtn"><i class="fas fa-arrow-left"></i> Back</button>
+            <h2>Reports Civilian</h2>
+            <div id="display-report-now"></div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const phoneTrackingReportBtn = document.getElementById('phoneTrackingReportBtn');
+            const reportsCivilBtn = document.getElementById('reportsCivilBtn');
+            const deletePostBtn = document.getElementById('deletePostBtn');
+            const backToMainBtn = document.getElementById('backToMainBtn');
+
+            const phoneTrackingSection = document.getElementById('phoneTrackingSection');
+            const reportsCivilSection = document.getElementById('reportsCivilSection');
+
+            const displayReportData = document.getElementById('display-report-data');
+            const displayReportNow = document.getElementById('display-report-now');
+
+            phoneTrackingReportBtn.addEventListener('click', () => {
+                phoneTrackingSection.classList.remove('hidden');
+                reportsCivilSection.classList.add('hidden');
+                fetch('/get-phone-reports')
+                    .then(response => response.json())
+                    .then(data => {
+                        displayReportData.innerHTML = '';
+                        data.forEach(report => {
+                            addPost(displayReportData, report);
+                        });
+                    });
+            });
+
+            reportsCivilBtn.addEventListener('click', () => {
+                phoneTrackingSection.classList.add('hidden');
+                reportsCivilSection.classList.remove('hidden');
+                fetch('/get-civil-reports')
+                    .then(response => response.json())
+                    .then(data => {
+                        displayReportNow.innerHTML = '';
+                        data.forEach(report => {
+                            addPost(displayReportNow, report);
+                        });
+                    });
+            });
+
+            backToMainBtn.addEventListener('click', () => {
+                reportsCivilSection.classList.add('hidden');
+                phoneTrackingSection.classList.remove('hidden');
+            });
+
+            deletePostBtn.addEventListener('click', () => {
+                const allPosts = [...displayReportData.children, ...displayReportNow.children];
+                allPosts.forEach(post => {
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.classList.add('delete-btn');
+                    post.appendChild(deleteButton);
+                    deleteButton.addEventListener('click', () => {
+                        if (confirm('Are you sure you want to delete this report?')) {
+                            post.remove();
+                        }
+                    });
+                });
+            });
+
+            function addPost(container, content) {
+                const post = document.createElement('div');
+                post.innerHTML = `
+                    <p><strong>Full Name:</strong> ${content.fullName}</p>
+                    <p><strong>Phone Number:</strong> ${content.phoneNumber}</p>
+                    <p><strong>Email Address:</strong> ${content.emailAddress}</p>
+                    <p><strong>Address:</strong> ${content.address}</p>
+                    <p><strong>Gender:</strong> ${content.gender}</p>
+                    <p><strong>Purchase Option:</strong> ${content.purchaseOption}</p>
+                    <p><strong>Additional Info:</strong> ${content.additionalInfo}</p>
+                    <small>${new Date().toLocaleString()}</small>
+                `;
+                container.appendChild(post);                       
+}
+        });
+    </script>
+    <script src="server.js"></script> 
+</body>
+</html>

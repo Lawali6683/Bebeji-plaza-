@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Page Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e9ecef;
+            color: #a5ff80;
+            text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            background-color: #007bff;
+            color: #a5ff80;
+            text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 20px;
+            text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #a5ff80;
+        }
+
+        header nav {
+            display: flex;
+            align-items: center;
+        }
+
+        header nav button {
+            background: none;
+            border: none;
+            color: #a5ff80;
+            font-size: 16px;
+            text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3); 
+            cursor: pointer;
+            margin: 0 10px;
+            padding: 9px;
+            transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        header nav button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        header nav button i {
+            margin-right: 5px;
+        }
+
+        .main-content {
+            margin-top: 60px; 
+            text-align: center;
+            position: relative;
+        }
+
+        .main-content img {
+            width: 100%;
+            height: 250%;
+            max-height: 400px;
+            object-fit: cover;
+        }
+
+        .main-content .banner-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .main-content .banner-text h1 {
+            margin: 0;
+            font-size: 10px;
+            text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3);    
+            font-weight: bold;
+            letter-spacing: 1.5px;
+        }
+
+        .main-content .banner-text p {
+            margin: 10px 0 0;
+            font-size: 18px;
+            text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3);  
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .gup {
+            font-size: 2px;
+            text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3); 
+        }
+
+        .container2 {
+            background-image: url("b2.png");    
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+            text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 5px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LchsA8qAAAAAPIANgaOY_BASjfdSk6nqA0EFm9a"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <button onclick="location.href='index.html'"><i class="fas fa-home"></i> Home</button>
+            </nav>
+            <h1 class="gup">BEBEJI PLAZA</h1>
+            <nav>
+                <button onclick="location.href='register.html'"><i class="fas fa-sign-in-alt"></i> Register</button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <img src="b1.png" alt="Large Banner">
+        <div class="banner-text">
+            <h1>WELCOME BACK TO BEBEJI PLAZA <i>phone center</i></h1>
+        </div>
+    </div>
+
+    <div class="content container2">
+        <h style="color:green;"><strong>Login Your Business Shop Account</strong></h>
+        <form id="loginForm" action="javascript:void(0);" method="POST">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="Email address" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
+            <button type="submit">Login</button>
+        </form>
+        <button id="forgotPasswordBtn">Forgot Password?</button>
+    </div>
+
+    <div class="modal" id="forgotPasswordModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form id="forgotPasswordForm" action="javascript:void(0);" method="POST">
+                <label for="forgotEmail">Email address</label>
+                <input type="email" id="forgotEmail" name="forgotEmail" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    grecaptcha.ready(function() {
+        grecaptcha.execute('6LchsA8qAAAAAPIANgaOY_BASjfdSk6nqA0EFm9a', { action: 'login' }).then(function(token) {
+            document.getElementById('g-recaptcha-response').value = token;
+        });
+    });
+
+    document.getElementById('forgotPasswordBtn').onclick = function() {
+        document.getElementById('forgotPasswordModal').style.display = "flex";
+    };
+
+    document.getElementsByClassName('close')[0].onclick = function() {
+        document.getElementById('forgotPasswordModal').style.display = "none";
+    };
+
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('forgotPasswordModal')) {
+            document.getElementById('forgotPasswordModal').style.display = "none";
+        }
+    };
+
+    document.getElementById('loginForm').onsubmit = function(event) {
+        event.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const recaptchaResponse = document.getElementById('g-recaptcha-response').value;
+
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password, 'g-recaptcha-response': recaptchaResponse })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = 'profile.html'; // Redirect to profile page
+            } else {
+                console.error('Login Error:', data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Login Error:', error);
+        });
+    };
+
+    document.getElementById('forgotPasswordForm').onsubmit = function(event) {
+        event.preventDefault();
+        const forgotEmail = document.getElementById('forgotEmail').value;
+
+        fetch('/forgot-password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: forgotEmail })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Go and check your email, we sent your password.');
+                document.getElementById('forgotPasswordModal').style.display = "none";
+            } else {
+                console.error('Forgot Password Error:', data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Forgot Password Error:', error);
+        });
+    };
+});
+
+    </script>
+    <script src="server.js"></script> 
+</body>
+</html>

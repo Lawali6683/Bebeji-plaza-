@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Rights Report</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+         
+       text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3);
+           
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            text-shadow: 1px 0px 3px red;  
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            Color:#5b15ff;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 1rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        #main-content {
+            padding: 2rem;
+            background-color: #fff;
+            margin: 1rem auto;
+            width: 80%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #intro-text {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            Text-align:center;
+            Font-weight:bold;
+            Color:#ff00c7;
+            Font-size:15px;
+        }
+
+        #forms-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #form-menu {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        #form-menu button {
+            background-color: #4CAF50;
+            color: #5b15ff;
+            border: none;
+            padding: 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .form-container {
+            width: 80%;
+            margin-bottom: 2rem;
+            background-color: #f9f9f9;
+            padding: 1rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h2 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 1rem;
+        }
+
+        input, select, textarea {
+            width: 90%;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: #5b15ff;
+            border: none;
+            padding: 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+
+        footer {
+            background-color: #a4ff00;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+       .close{
+       Text-align:none;
+           Color:#2600ff;
+       }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to International Human Rights Support and Report</h1>
+        <nav>
+            <ul id="close">
+                <li><a href="index.html" class="fas fa-home"style="color:#2600ff" >Home</a></li>
+                <li><a href="#" id="language-switch"class="fas fa-globe" style="color:#2600ff">Hausa</a></li>
+                <li><a href="#" id="language-switch-en"class="fas fa-globe"style="color:#2600ff">English</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="main-content">
+        <p id="intro-text">
+            You are welcome to International Human Rights. We are here to hear your complaints and secure your rights. We have our officers everywhere in Nigeria, ensuring the protection of human rights. You can now file your complaint, and we will look into it and send our expert officers to assist you. We can track offenders within Nigeria and recover your belongings, then prosecute the offenders. The law prohibits taking the law into your hands. Report your complaint to us now.
+        </p>
+
+        <div id="forms-container">
+            <div id="form-menu">
+                <button id="device-tracking-btn">phone Report Form</button>
+                <button id="report-ensure-btn">Report problems issue</button>
+            </div>
+
+            <div id="device-tracking-form" class="form-container" style="display: none;">
+                <h>fill this form </h>
+                <form id="tracking-form">
+                    <label for="full-name">Full Name</label>
+                    <input type="text" id="full-name" name="full-name" required>
+                    
+                    <label for="phone-number">Phone Number</label>
+                    <input type="text" id="phone-number" name="phone-number" required>
+
+                    <label for="email-address">Email Address</label>
+                    <input type="email" id="email-address" name="email-address" required>
+
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address" required>
+
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender" required>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+
+                    <label for="purchase-option">Can you remember one of these:</label>
+                    <select id="purchase-option" name="purchase-option" required>
+                        <option value="phone-ip">Sallet</option>
+       <option value="phone-ip">Your Phone IP Address</option>                
+                        <option value="bebeji-slip">Registration card number for Bebeji Plaza slip?</option>
+                        <option value="shop-number">The shop number where you bought the phone.</option>
+                        <option value="phone-name">Your phone Name</option>
+                        <option value="No">I don't remember any of it.</option>
+                    </select>
+
+                    <div id="additional-info-container" style="display: none;">
+                        <label for="additional-info">Enter the information you chose:</label>
+                        <input type="text" id="additional-info" name="additional-info">
+                    </div>
+
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+
+            <div id="report-ensure-form" class="form-container" style="display: none;">
+                <h2>Report Any Ensure Form</h2>
+                <form id="ensure-form">
+                    <label for=ensure-full-name">Full Name</label>
+                    <input type="text" id="ensure-full-name" name="ensure-full-name" required>
+
+                    <label for="ensure-phone-number">Phone Number</label>
+                    <input type="text" id="ensure-phone-number" name="ensure-phone-number" required>
+
+                    <label for="ensure-email-address">Email Address</label>
+                    <input type="email" id="ensure-email-address" name="ensure-email-address" required>
+
+                    <label for="home-address">Home Address</label>
+                    <input type="text" id="home-address" name="home-address" required>
+
+                    <label for="incident-location">Location of Incident</label>
+                    <input type="text" id="incident-location" name="incident-location" required>
+
+                    <label for="report-details">Write Your Report (Hausa or English)</label>
+                    <textarea id="report-details" name="report-details" required></textarea>
+
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="display-report-data"></div>
+        <div id="display-report-now"></div>
+    </section>
+
+    <footer>
+        <p>@2024 o
+        Human Rights </p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const languageSwitch = document.getElementById('language-switch');
+            const languageSwitchEn = document.getElementById('language-switch-en');
+            const introText = document.getElementById('intro-text');
+            const deviceTrackingBtn = document.getElementById('device-tracking-btn');
+            const reportEnsureBtn = document.getElementById('report-ensure-btn');
+            const deviceTrackingForm = document.getElementById('device-tracking-form');
+            const reportEnsureForm = document.getElementById('report-ensure-form');
+            const trackingForm = document.getElementById('tracking-form');
+            const ensureForm = document.getElementById('ensure-form');
+            const purchaseOption = document.getElementById('purchase-option');
+            const additionalInfoContainer = document.getElementById('additional-info-container');
+
+            languageSwitch.addEventListener('click', () => {
+                introText.textContent = "Barka da zuwa International Human Rights. Muna nan domin jin korafin ku da kuma kare muku hakkokin ku. Muna da jami'an mu a ko'ina a Najeriya domin tabbatar da kare hakkokin dan Adam. Za ku iya shigar da korafin ku yanzu, kuma za mu duba kuma mu aika jami'an mu don taimaka muku. Za mu iya bibiyar wadanda suka aikata laifi a cikin Najeriya kuma mu dawo muku da kayan ku, sannan mu shigar da kara a kan masu laifin. Doka ta hana daukar doka a hannun ku. Ku sanar da mu matsalar ku yanzu.";
+                languageSwitch.textContent = "English";
+            });
+
+                        languageSwitch.addEventListener('click', () => {
+                introText.textContent = "Barka da zuwa International Human Rights. Muna nan domin jin korafin ku da kuma kare muku hakkokin ku. Muna da jami'an mu a ko'ina a Najeriya domin tabbatar da kare hakkokin dan Adam. Za ku iya shigar da korafin ku yanzu, kuma za mu duba kuma mu aika jami'an mu don taimaka muku. Za mu iya bibiyar wadanda suka aikata laifi a cikin Najeriya kuma mu dawo muku da kayan ku, sannan mu shigar da kara a kan masu laifin. Doka ta hana daukar doka a hannun ku. Ku sanar da mu matsalar ku yanzu.";
+                languageSwitch.textContent = "Hausa";
+            });
+
+            languageSwitchEn.addEventListener('click', () => {
+                introText.textContent = "You are welcome to International Human Rights. We are here to hear your complaints and secure your rights. We have our officers everywhere in Nigeria, ensuring the protection of human rights. You can now file your complaint, and we will look into it and send our expert officers to assist you. We can track offenders within Nigeria and recover your belongings, then prosecute the offenders. The law prohibits taking the law into your hands. Report your complaint to us now.";
+                languageSwitchEn.textContent = "English";
+            });
+
+            deviceTrackingBtn.addEventListener('click', () => {
+                deviceTrackingForm.style.display = 'block';
+                reportEnsureForm.style.display = 'none';
+            });
+
+            reportEnsureBtn.addEventListener('click', () => {
+                reportEnsureForm.style.display = 'block';
+                deviceTrackingForm.style.display = 'none';
+            });
+
+            purchaseOption.addEventListener('change', (event) => {
+                if (event.target.value === 'phone-ip' || event.target.value === 'bebeji-slip' || event.target.value === 'shop-number' || event.target.value === 'phone-name') {
+                    additionalInfoContainer.style.display = 'block';
+                } else {
+                    additionalInfoContainer.style.display = 'none';
+                }
+            });
+
+            trackingForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                alert("Your report has been sent. We will contact you at your phone number anytime.");
+
+                const reportData = {
+                    fullName: trackingForm['full-name'].value,
+                    phoneNumber: trackingForm['phone-number'].value,
+                    emailAddress: trackingForm['email-address'].value,
+                    address: trackingForm['address'].value,
+                    gender: trackingForm['gender'].value,
+                    purchaseOption: trackingForm['purchase-option'].value,
+                    additionalInfo: trackingForm['additional-info'].value || 'N/A'
+                };
+
+                document.getElementById('display-report-data').innerHTML += `
+                    <div>
+                        <p>Full Name: ${reportData.fullName}</p>
+                        <p>Phone Number: ${reportData.phoneNumber}</p>
+                        <p>Email Address: ${reportData.emailAddress}</p>
+                        <p>Address: ${reportData.address}</p>
+                        <p>Gender: ${reportData.gender}</p>
+                        <p>Purchase Option: ${reportData.purchaseOption}</p>
+                        <p>Additional Info: ${reportData.additionalInfo}</p>
+                    </div>
+                `;
+
+                trackingForm.reset();
+                deviceTrackingForm.style.display = 'none';
+            });
+
+            ensureForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                alert("Your report is sent. We will review your complaint and call you.");
+
+                const ensureData = {
+                    fullName: ensureForm['ensure-full-name'].value,
+                    phoneNumber: ensureForm['ensure-phone-number'].value,
+                    emailAddress: ensureForm['ensure-email-address'].value,
+                    homeAddress: ensureForm['home-address'].value,
+                    incidentLocation: ensureForm['incident-location'].value,
+                    reportDetails: ensureForm['report-details'].value
+                };
+
+                document.getElementById('display-report-now').innerHTML += `
+                    <div>
+                        <p>Full Name: ${ensureData.fullName}</p>
+                        <p>Phone Number: ${ensureData.phoneNumber}</p>
+                        <p>Email Address: ${ensureData.emailAddress}</p>
+                        <p>Home Address: ${ensureData.homeAddress}</p>
+                        <p>Incident Location: ${ensureData.incidentLocation}</p>
+                        <p>Report Details: ${ensureData.reportDetails}</p>
+                    </div>
+                `;
+
+                ensureForm.reset();
+                reportEnsureForm.style.display = 'none';
+            });
+        });
+    </script>
+    
+    <script>
+        document.getElementById('tracking-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            fetch('/submit-report', {
+                method: 'POST',
+                body: new URLSearchParams(formData)
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('phoneTrackingReport').innerHTML = data;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+        document.getElementById('ensure-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            fetch('/submit-ensure', {
+                method: 'POST',
+                body: new URLSearchParams(formData)
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('display-report-data').innerHTML = data;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+    <script src="server.js"></script> 
+</body>
+</html>
