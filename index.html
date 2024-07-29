@@ -180,7 +180,7 @@
             color: #3c2bff;
             font-size: 10px;
             position: fixed;
-            bottom: 0;
+            bottom:0;
             width: 100%;
             display: flex;
             justify-content: space-around;
@@ -192,10 +192,11 @@
             color: blue;
             text-decoration: none;
             margin:  0px;
-            display: flex;
+            display: flex;          
             flex-direction: column;
             align-items: center;
-            margin-button: -0em 
+            gap:0;
+            margin-buttom: -0em;     
          Font-weight:bold;
          Font-size:14px;
         }
@@ -441,11 +442,23 @@
         <div id="submitted-posts"></div>
             
     <footer>
-                <a href="index.html"><i class="fas fa-home icon"></i> <i><strong>Home</strong></i></a>
-        <a href="bebeji.html"><i class="fas fa-book icon"></i> <i><strong>Bebeji Policy</strong></i></a>
-        <a href="login.html"><i class="fas fa-user icon"></i> <i><strong>Profile</strong></i></a>
+                <a href="index.html"><i class="fas fa-home icon"></i><span><strong>Home</strong></span></a>
+<a href="bebeji.html"><i class="fas fa-book icon"></i><span><strong>Bebeji Policy</strong></span></a>
+<a href="login.html"><i class="fas fa-user icon"></i><span><strong>Profile</strong></span></a>
     </footer>  
           <script>
+               function toggleSearch() {
+            const searchInput = document.getElementById('search-input');
+            const sendButton = document.getElementById('send-button');
+            if (searchInput.classList.contains('active')) {
+                searchInput.classList.remove('active');
+                sendButton.style.display = 'none';
+            } else {
+                searchInput.classList.add('active');
+                sendButton.style.display = 'block';
+                searchInput.focus();
+            }
+        }
     function sendSearch() {
         const searchInput = document.getElementById('search-input');
         const query = searchInput.value;
