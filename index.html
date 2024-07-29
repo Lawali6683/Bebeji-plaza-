@@ -174,7 +174,7 @@
         footer {
             background: none;
             color: blue;
-            padding: 1em;
+            padding: 0em;
             text-align: center;
             text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3);
             color: #3c2bff;
@@ -185,7 +185,7 @@
             display: flex;
             justify-content: space-around;
             transition: background 0.3s ease;
-            border: 1px solid #ffffff;    
+            border: 0px solid #ffffff;    
         }
 
         footer a {
@@ -195,15 +195,18 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+         Font-weight:bold;
+         Font-size:14px;
         }
 
         .icon {
             width: 35px;
             height: 35px;
             font-size: 20px;
-            text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 3px 4px 4px rgba(70, 0, 0, 0.3);
             margin-bottom: 5px;
             color: blue;
+            
         }
 
         #search-input {
@@ -316,7 +319,7 @@
         }
        .modalText{
          Text-align:center;
-         font-size: 15px;
+         font-size: 20px;
             Font-weight:bold;
             text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3);
        }
@@ -432,7 +435,7 @@
             <span onclick="backMenu()"><i class="fas fa-arrow-left"></i> Back</span>
         </div>
     </header>
-    
+   
     <p class="hello">
         <div id="submitted-posts"></div>
             
@@ -440,7 +443,46 @@
                 <a href="index.html"><i class="fas fa-home icon"></i> <i><strong>Home</strong></i></a>
         <a href="bebeji.html"><i class="fas fa-book icon"></i> <i><strong>Bebeji Policy</strong></i></a>
         <a href="login.html"><i class="fas fa-user icon"></i> <i><strong>Profile</strong></i></a>
-    </footer>        
+    </footer>  
+          <script>
+    function sendSearch() {
+        const searchInput = document.getElementById('search-input');
+        const query = searchInput.value;
+
+        fetch('/search', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ query })
+        })
+        .then(response => response.json())
+        .then(data => {
+            displayResults(data.results);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    function displayResults(results) {
+        const container = document.getElementById('submitted-posts');
+        container.innerHTML = ''; // Share sakamakon da aka gani a baya
+
+        results.forEach(result => {
+            const postContainer = document.createElement('div');
+            postContainer.classList.add('post-container');
+
+            postContainer.innerHTML = `
+                <h2>${result.title}</h2>
+                <p>${result.content}</p>
+            `;
+
+            container.appendChild(postContainer);
+        });
+    }
+</script>
+
     <script>
         function toggleSubmenu(menuId) {
             document.querySelectorAll('.submenu').forEach(submenu => {
@@ -455,26 +497,7 @@
         function backMenu() {
             document.querySelectorAll('.submenu').forEach(submenu => submenu.style.display = 'none');
         }
-
-        function toggleSearch() {
-            const searchInput = document.getElementById('search-input');
-            const sendButton = document.getElementById('send-button');
-            const searchButton = document.getElementById('search-button');
-
-            if (searchInput.classList.contains('active')) {
-                alert('Searching for: ' + searchInput.value);
-            } else {
-                searchInput.classList.add('active');
-                sendButton.style.display = 'inline-block';
-                searchButton.style.display = 'none';
-            }
-        }
-
-        function sendSearch() {
-            const searchInput = document.getElementById('search-input');
-            alert('Sending search for: ' + searchInput.value);
-        }
-
+                      
         // JavaScript for Loading Screen and Network Check
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
