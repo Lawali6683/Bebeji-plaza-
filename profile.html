@@ -245,6 +245,7 @@
             <a href="index.html" class="menu-item">
                 <i class="fas fa-home"></i> Home
             </a>
+                       
             <a href="#" class="menu-item" id="notification">
                 <i class="fas fa-heart"></i>Bs, Coins<span id="notification-count">0</span>
             </a>
@@ -378,11 +379,11 @@
         }); 
         });                                  
     </script>
-    
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+      
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body {
+      
+         body {
             font-family: 'Roboto', sans-serif;
             background-color: white;
             Text-align; node;
@@ -409,10 +410,10 @@
             margin-top: 20px;
       border-bottom: 3px solid blue; 
         border-bottom: 4px solid;
-     border-image: linear-gradient(to right, red, green, blue) 1;  
+     border-image: linear-gradient(to right, red, green, blue) 1;
         border-top: 3px solid blue;
           border-top: 4px solid;
-     border-image: linear-gradient(to right, red, green, blue) 1;      
+     border-image: linear-gradient(to right, red, green, blue) 1;    
  
                }
 
@@ -514,12 +515,10 @@
         .submitted-post img, .submitted-post video {
             width: 100%;
             height: auto;
-            border-radius: 0px;
-            border-top: 4px solid;
-     border-image: linear-gradient(to right, red, green, blue) 1;   
-     border-bottom: 2px solid;
-     border-image: linear-gradient(to right, red, green, blue) 1;   
-            margin-top: 1px;
+       border-radius: 0px; 
+            border-bottom: 3px solid #000000;        
+                             margin-top: 3px;
+            border-top: 4px solid red;
         }
 
         .camera-menu {
@@ -599,8 +598,22 @@
             margin-top: 1px; 
                     
        }
-                
+       .user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
+.user-info img {
+    width: 45px;
+    
+    height: 45px; 
+    
+    border-radius: 50%;
+    border-bottom: 2px solid #4615ff;
+    object-fit: cover; 
+}
+ 
     </style>
 </head>
 <body>
@@ -618,8 +631,8 @@
 </div>
 <div id="submitted-posts"></div>
 
-
 <script>
+    document.addEventListener('DOMContentLoaded', () => {
     let selectedFiles = [];
     let currentVideoElement = null;
     let viewCounts = {};
@@ -632,7 +645,7 @@
 
     document.getElementById('video-input').addEventListener('change', (event) => {
         const files = event.target.files;
-        selectedFiles = Array.from(files).slice(0, 1);  // Allow only one video
+        selectedFiles = Array.from(files).slice(0, 1); // Allow only one video
 
         const preview = document.getElementById('preview');
         preview.innerHTML = '';
@@ -661,7 +674,7 @@
             return;
         }
 
-        selectedFiles = selectedFiles.concat(Array.from(files).slice(0, 4 - selectedFiles.length));  // Allow up to 4 images
+        selectedFiles = selectedFiles.concat(Array.from(files).slice(0, 4 - selectedFiles.length)); // Allow up to 4 images
 
         const preview = document.getElementById('preview');
         preview.innerHTML = '';
@@ -682,24 +695,32 @@
         }
 
         const time = new Date().toLocaleString();
+        const userName = document.getElementById('name-p') ? document.getElementById('name-p').textContent : 'Bebeji plaza';
+        const userImage = document.getElementById('face-image') ? document.getElementById('face-image').src : 'default-avatar.png';
 
         const post = document.createElement('div');
         post.classList.add('post-container', 'submitted-post');
         post.innerHTML = `
+            <div class="user-info">
+                <img src="${userImage}" alt="" class="user-image" onclick="window.location.href='profile.html';" onerror="this.onerror=null; this.src='default-avatar.png';">
+                <span class="user-name">${userName}</span>
+                <i class="fas fa-share" id="share-icon"></i>
+            </div>
             <p>${text}</p>
             <div id="post-preview" class="slideshow-container"></div>
             <div class="post-info">
                 <span>${time}</span>
-                <button><span class="love-count"><i class="fas fa-heart"></i> <span>0</span></span></button>
-                <button><span class="view-count"><i class="fas fa-eye"></i> <span>1</span></span></button>
+                <button><span class="lovecount" id="notification"><i class="fas fa-heart"></i> <span>0</span></button>
+                <button><span class="view-count"><i class="fas fa-eye"></i> <span>1</span></button>
             </div>
             <button class="buy-now"><i class="fas fa-arrow-right"></i> <strong>Buy Now</strong></button>
             <div class="post-actions">
-                <button class="edit-post">Edit</button>
-                <button class="delete-post">Delete</button>     
-                                                     
-            </div>           
-
+                <i class="fas fa-ellipsis-h action-menu"></i>
+                <div class="menu-options" style="display: none;">
+                    <button class="edit-post">Edit</button>
+                    <button class="delete-post">Delete</button>
+                </div>
+            </div>
         `;
 
         const postPreview = post.querySelector('#post-preview');
@@ -717,7 +738,7 @@
                 }
                 postPreview.appendChild(img);
             } else if (file.type.startsWith('video/')) {
-                         const video = document.createElement('video');
+                const video = document.createElement('video');
                 video.src = URL.createObjectURL(file);
                 video.controls = true;
                 video.autoplay = true;
@@ -743,7 +764,7 @@
                 slideIndex++;
                 if (slideIndex > slides.length) { slideIndex = 1 }
                 slides[slideIndex - 1].style.display = 'block';
-                setTimeout(showSlides, 2000); // Change image every 5 seconds
+                setTimeout(showSlides, 2000); // Change image every 2 seconds
             }
 
             showSlides();
@@ -755,7 +776,6 @@
         likeCounts[postID] = 0;
 
         document.getElementById('submitted-posts').prepend(post);
-        document.getElementById('submitted-posts').prepend(post);
 
         post.querySelector('.fa-heart').addEventListener('click', function () {
             if (!this.classList.contains('liked')) {
@@ -765,12 +785,22 @@
                 this.nextElementSibling.textContent = count + 1;
                 likeCounts[postID]++;
                 totalLikes++;
-                document.getElementById('notification-count').innerText = ` ${totalLikes}`;
+               document.getElementById('notification-count').innerText = ` ${totalLikes}`;
             }
         });
 
+        post.querySelector('.fa-eye').addEventListener('click', function () {
+            viewCounts[postID]++;
+            this.nextElementSibling.textContent = viewCounts[postID];
+        });
+
         post.querySelector('.buy-now').addEventListener('click', () => {
-            window.location.href = 'profile.html';
+            window.location.href = '#profile.html';
+        });
+
+        post.querySelector('.action-menu').addEventListener('click', function () {
+            const menu = this.nextElementSibling;
+            menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
         });
 
         post.querySelector('.edit-post').addEventListener('click', function () {
@@ -792,49 +822,46 @@
             }
         });
 
+        post.querySelector('#share-icon').addEventListener('click', function () {
+            const shareData = {
+                title: 'Check out this post',
+                text: `${text}`,
+                url: window.location.href
+            };
+            navigator.share(shareData).then(() => {
+                console.log('Post shared successfully');
+            }).catch(console.error);
+        });
+
+        // Copy the post to all pages with the ID "submitted-posts"
+        const submittedPostsSections = document.querySelectorAll('#submitted-posts');
+        submittedPostsSections.forEach(section => {
+            if (section !== post.closest('#submitted-posts')) {
+                section.prepend(post.cloneNode(true));
+            }
+        });
 
         document.getElementById('post-text').value = '';
         document.getElementById('preview').innerHTML = '';
         selectedFiles = [];
     });
 
-    document.getElementById('submitted-posts').addEventListener('click', function (event) {
-        if (event.target.classList.contains('fa-eye')) {
-            const post = event.target.closest('.submitted-post');
-            const postID = post.dataset.postId;
-            viewCounts[postID]++;
-            event.target.nextElementSibling.textContent = viewCounts[postID];
-        }
-    });
-
     let lastScrollTop = 0;
     window.addEventListener('scroll', () => {
         let st = window.pageYOffset || document.documentElement.scrollTop;
-        if (st > lastScrollTop) {
-            // Downscroll
-            let videos = document.querySelectorAll('video');
-            videos.forEach((video) => {
-                if (video.getBoundingClientRect().top < window.innerHeight && video.getBoundingClientRect().bottom > 0) {
-                    video.play();
-                } else {
-                    video.pause();
-                }
-            });
-        } else {
-            // Upscroll
-            let videos = document.querySelectorAll('video');
-            videos.forEach((video) => {
-                if (video.getBoundingClientRect().top < window.innerHeight && video.getBoundingClientRect().bottom > 0) {
-                    video.play();
-                } else {
-                    video.pause();
-                }
-            });
-        }
+        let videos = document.querySelectorAll('video');
+        videos.forEach((video) => {
+            if (video.getBoundingClientRect().top < window.innerHeight && video.getBoundingClientRect().bottom > 0) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        });
         lastScrollTop = st <= 0 ? 0 : st;
     });
-                                 
-</script>
+});
+
+</script>                   
 
 <style>
     footer {
