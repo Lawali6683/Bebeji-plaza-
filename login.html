@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Title</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -10,15 +11,16 @@
             margin: 0;
             padding: 0;
             background-color: #e9ecef;
-            color: #a5ff80;
+            color: #0c0e17;
             text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
         }
 
         header {
-            background-color: #007bff;
-            color: #a5ff80;
+                background: linear-gradient(750deg, green, white, green);
+            color: #1c00ba;
             text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3);
-            position: fixed;
+            
             width: 100%;
             top: 0;
             left: 0;
@@ -27,19 +29,13 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        header .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2px;
-        }
-
-        header h1 {
+        header h {
             margin: 0;
-            font-size: 20px;
+            font-size: 7px;
+     text-shadow: 0px 2px 1px blue;       
             text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3);
             font-weight: bold;
-            letter-spacing: 1px;
+            letter-spacing: 10px;
             color: #a5ff80;
         }
 
@@ -51,9 +47,9 @@
         header nav button {
             background: none;
             border: none;
-            color: #a5ff80;
+            color: #1c00ba;
             font-size: 16px;
-            text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3); 
+            text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3);
             cursor: pointer;
             margin: 0 10px;
             padding: 9px;
@@ -68,25 +64,97 @@
         }
 
         header nav button i {
-            margin-right: 5px;
+      
+  
+gradient(circle, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+  background-size: 50% 50%;
+  animation: glitterMove 3s linear infinite;
+}
+
+@keyframes glitterMove {
+  0% {
+    transform: translateY(-100%);
+  }
+  50% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+  
+      margin-right: 5px;
         }
 
         .main-content {
-            margin-top: 60px; 
+     margin-top: 0px;
             text-align: center;
             position: relative;
+            padding: 3px;               
+       
+  animation: backgroundChange 8s infinite, glitter 2s infinite;
+  background-size: 200% 200%;
+}
+
+@keyframes backgroundChange {
+  0% {
+    background: linear-gradient(45deg, #ff5733, #ff8d33); 
+  }
+  25% {
+    background: linear-gradient(950deg, #33ff57, #ba1f82, #33ff8d); 
+  }
+  50% {
+    background: linear-gradient(750deg, #3357ff,#abbaab, #338dff); 
+  }
+  75% {
+    background: linear-gradient(750deg, #ff33a6,#0f29ba #ff338d); 
+  }
+  100% {
+    background: linear-gradient(750deg, #ff5733,#ba7ca3, #ff8d33); 
+  }
+}
+
+@keyframes glitter {
+  0%, 100% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  }
+
+.glitter {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+  background-size: 50% 50%;
+  animation: glitterMove 3s linear infinite;
+}
+
+@keyframes glitterMove {
+  0% {
+    transform: translateY(-100%);
+  }
+  50% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(-100%);   
         }
 
         .main-content img {
-            width: 100%;
-            height: 250%;
-            max-height: 400px;
+            width: 50%;
+            height: 50;
+            max-height: 100%;
             object-fit: cover;
+            border-radius: 8px;
         }
 
-        .main-content .banner-text {
+        .main-content .banner-text 
             position: absolute;
-            top: 50%;
+            top: 70%;
             left: 50%;
             transform: translate(-50%, -50%);
             color: #fff;
@@ -98,8 +166,8 @@
 
         .main-content .banner-text h1 {
             margin: 0;
-            font-size: 10px;
-            text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3);    
+            font-size: 24px;
+            text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3);
             font-weight: bold;
             letter-spacing: 1.5px;
         }
@@ -107,7 +175,7 @@
         .main-content .banner-text p {
             margin: 10px 0 0;
             font-size: 18px;
-            text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3);  
+            text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3);
         }
 
         .content {
@@ -115,16 +183,19 @@
         }
 
         .gup {
-            font-size: 2px;
-            text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3); 
+            font-size: 16px;
+            text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.3);
         }
 
         .container2 {
-            background-image: url("b2.png");    
+            background-image: url("b2.png");
+            background-size: cover;
             padding: 40px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
+            margin: 0 auto;
+            max-width: 500px;
         }
 
         label {
@@ -133,7 +204,7 @@
         }
 
         input {
-            width: 100%;
+            width: calc(100% - 22px);
             padding: 10px;
             margin-top: 5px;
             border: 1px solid #ccc;
@@ -164,20 +235,20 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgb(0, 0, 0);
             background-color: rgba(0, 0, 0, 0.4);
             justify-content: center;
             align-items: center;
+            padding: 10px;
         }
 
         .modal-content {
             background-color: #fefefe;
-            margin: auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 80%;
+            width: 100%;
             max-width: 500px;
             border-radius: 5px;
+            box-sizing: border-box;
         }
 
         .close {
@@ -193,37 +264,71 @@
             text-decoration: none;
             cursor: pointer;
         }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            header nav {
+                margin-top: 10px;
+            }
+
+            header h1 {
+                font-size: 20px;
+            }
+
+            .main-content .banner-text {
+                font-size: 18px;
+                padding: 15px;
+            }        
+       .ty{
+           Text-align:center;
+           Font-weight:bold;
+           Font-size:16px;          
+           Color:white;
+         text-shadow: 0px 2px 1px blue;  
+       }
+      .ry{
+          Display:center;
+          Border-radius:10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);   
+          
+      }
     </style>
-    <script src="https://www.google.com/recaptcha/api.js?render=6LchsA8qAAAAAPIANgaOY_BASjfdSk6nqA0EFm9a"></script>
 </head>
 <body>
     <header>
         <div class="container">
             <nav>
-                <button onclick="location.href='index.html'"><i class="fas fa-home"></i> Home</button>
+                <button onclick="location.href='index.html'"><i style="color:blue;"class="fas fa-home"></i style="color:blue;"> Home</button>
             </nav>
-            <h1 class="gup">BEBEJI PLAZA</h1>
+            <h1 class="gup"><i style ="color:red;">BEBEJI</1> <i style="color:white;">PLAZA</i></h1>
+                      
             <nav>
-                <button onclick="location.href='register.html'"><i class="fas fa-sign-in-alt"></i> Register</button>
+                <button onclick="location.href='register.html'"><i style="color:blue;"class="fas fa-sign-in-alt"></i style="color:blue;"> Register</button>
             </nav>
         </div>
     </header>
 
-    <div class="main-content">
-        <img src="b1.png" alt="Large Banner">
+    <div class="main-content" >
+    <div class="glitter"></div>   
+
+        <h1 class="ty">WELCOME BACK TO BEBEJI PLAZA <i>phone center</i></h>
+        <img class="ry" src="b1.png" alt="Large Banner" style="width:80%; height: 80%;">
         <div class="banner-text">
-            <h1>WELCOME BACK TO BEBEJI PLAZA <i>phone center</i></h1>
+            
         </div>
     </div>
 
     <div class="content container2">
         <h style="color:green;"><strong>Login Your Business Shop Account</strong></h>
         <form id="loginForm" action="javascript:void(0);" method="POST">
-            <label for="email">Email address</label>
-            <input type="email" id="email" name="email" placeholder="Email address" required>
-            <label for="password">Password</label>
+            <label style="color:black"for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="examples45@gmail.com" required>
+            <label style="color:black"for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Password" required>
-            <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
             <button type="submit">Login</button>
         </form>
         <button id="forgotPasswordBtn">Forgot Password?</button>
@@ -242,12 +347,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-    grecaptcha.ready(function() {
-        grecaptcha.execute('6LchsA8qAAAAAPIANgaOY_BASjfdSk6nqA0EFm9a', { action: 'login' }).then(function(token) {
-            document.getElementById('g-recaptcha-response').value = token;
-        });
-    });
-
     document.getElementById('forgotPasswordBtn').onclick = function() {
         document.getElementById('forgotPasswordModal').style.display = "flex";
     };
@@ -266,43 +365,43 @@
         event.preventDefault();
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-        const recaptchaResponse = document.getElementById('g-recaptcha-response').value;
 
         fetch('/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email, password, 'g-recaptcha-response': recaptchaResponse })
+            body: JSON.stringify({ email, password })
         })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                window.location.href = 'profile.html'; // Redirect to profile page
+                window.location.href = 'profile.html';
             } else {
-                console.error('Login Error:', data.message);
+                alert('Login failed: ' + data.message);
             }
         })
         .catch(error => {
-            console.error('Login Error:', error);
+            console.error('Error:', error);
+            alert('An error occurred. Please try again later.');
         });
     };
 
     document.getElementById('forgotPasswordForm').onsubmit = function(event) {
         event.preventDefault();
-        const forgotEmail = document.getElementById('forgotEmail').value;
+        const email = document.getElementById('forgotEmail').value;
 
         fetch('/forgot-password', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email: forgotEmail })
+            body: JSON.stringify({ email })
         })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert('Go and check your email, we sent your password.');
+                alert('Password reset link sent to your email.');
                 document.getElementById('forgotPasswordModal').style.display = "none";
             } else {
                 console.error('Forgot Password Error:', data.message);
@@ -314,7 +413,6 @@
     };
 });
 
-    </script>
-    <script src="server.js"></script> 
+</script>
 </body>
 </html>
