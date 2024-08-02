@@ -11,6 +11,9 @@ const schedule = require('node-schedule');
 const http = require('http');
 const socketIo = require('socket.io');
 const fs = require('fs');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
@@ -18,16 +21,14 @@ const io = socketIo(server);
 
 const PORT = process.env.PORT || 3000;
 
-// MongoDB Configuration
-const MONGO_URI = 'mongodb+srv://harunalawali5522:haruna66@cluster.mongodb.net/harunaMSA';
-mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
+// Tsararrakin MongoDB
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB ya haɗu'))
   .catch(err => console.log(err));
 
-// Session configuration
-const sessionSecret = crypto.randomBytes(64).toString('hex');
+// Tsararrakin zaman
 app.use(session({
-  secret: sessionSecret,
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: { secure: false }
@@ -39,11 +40,47 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Routes
+// Hanyoyi
 const userRoutes = require('./routes/userRoutes');
 const certificateRoutes = require('./routes/certificateRoutes');
 app.use(userRoutes);
 app.use(certificateRoutes);
+
+//index.html 
+app.post('/posts', upload.array('images', 5), async (req, res) => {
+  const { title, content } = req.body;
+  const images = req.files.map(file => file.path);
+  const post = new Post({ title, content, user: req.session.userId, images });
+  await post.save();
+  res.status(201).json({ success: true, message: 'Post created successfully' });
+});
+
+app.get('/posts', async (req, res) => {
+  const posts = await Post.find().populate('user');
+  res.status(200).json(posts);
+});
+
+app.post('/search', async (req, res) => {
+  const query = req.body.query;
+  try {
+    const results = await Post.find({
+      $or: [
+        { title: new RegExp(query, 'i') },
+        { content: new RegExp(query, 'i') }
+      ]
+    }).populate('user');
+    res.json({ results });
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while searching.' });
+  }
+});
+
+app.post('/storeData', async (req, res) => {
+  const { email, ip } = req.body;
+  const user = new User({ email, ip });
+  await user.save();
+  res.status(200).send('Data stored successfully');
+});
 
 // Push notifications setup (Firebase without VAPID keys)
 const webpush = require('web-push');
@@ -87,6 +124,7 @@ io.on('connection', (socket) => {
 });
 
 // Vercel configuration
+// Tsararrakin Vercel
 const vercelConfig = {
   version: 2,
   builds: [
@@ -97,7 +135,7 @@ const vercelConfig = {
 };
 fs.writeFileSync('vercel.json', JSON.stringify(vercelConfig, null, 2));
 
-// Package.json configuration
+// Tsararrakin Package.json
 const packageJsonConfig = {
   scripts: { start: 'node server.js', dev: 'nodemon server.js' },
   dependencies: {
@@ -117,7 +155,7 @@ const packageJsonConfig = {
 };
 fs.writeFileSync('package.json', JSON.stringify(packageJsonConfig, null, 2));
 
-// Start server
+// Fara uwar garken
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
