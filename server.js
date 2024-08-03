@@ -12,6 +12,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 const fs = require('fs');
 const dotenv = require('dotenv');
+const webpush = require('web-push');
 
 dotenv.config();
 
@@ -21,12 +22,12 @@ const io = socketIo(server);
 
 const PORT = process.env.PORT || 3000;
 
-// Tsararrakin MongoDB
+// MongoDB setup
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB ya haɗu'))
+  .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err));
 
-// Tsararrakin zaman
+// Session setup
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -40,13 +41,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Hanyoyi
+// Routes
 const userRoutes = require('./routes/userRoutes');
 const certificateRoutes = require('./routes/certificateRoutes');
 app.use(userRoutes);
 app.use(certificateRoutes);
 
-//index.html 
+// Post creation route
+const upload = multer({ dest: 'uploads/' });
 app.post('/posts', upload.array('images', 5), async (req, res) => {
   const { title, content } = req.body;
   const images = req.files.map(file => file.path);
@@ -82,8 +84,7 @@ app.post('/storeData', async (req, res) => {
   res.status(200).send('Data stored successfully');
 });
 
-// Push notifications setup (Firebase without VAPID keys)
-const webpush = require('web-push');
+// Push notifications setup
 const subscribers = [];
 app.post('/subscribe', (req, res) => {
   const subscription = req.body;
@@ -115,7 +116,7 @@ schedule.scheduleJob('0 9,21 * * *', () => {
   sendNotification(notification);
 });
 
-// Socket.io real-time communication
+// Socket.io setup
 io.on('connection', (socket) => {
   console.log('New client connected');
   socket.on('disconnect', () => {
@@ -123,39 +124,38 @@ io.on('connection', (socket) => {
   });
 });
 
-// Vercel configuration
-// Tsararrakin Vercel
-const vercelConfig = {
-  version: 2,
-  builds: [
-    { src: 'server.js', use: '@vercel/node' },
-    { src: 'public/**/*', use: '@vercel/static' }
-  ],
-  routes: [{ src: '/(.*)', dest: 'server.js' }]
-};
-fs.writeFileSync('vercel.json', JSON.stringify(vercelConfig, null, 2));
+// Static file serving
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
-// Tsararrakin Package.json
-const packageJsonConfig = {
-  scripts: { start: 'node server.js', dev: 'nodemon server.js' },
-  dependencies: {
-    "body-parser": "^1.19.0",
-    "crypto": "^1.0.1",
-    "express": "^4.17.1",
-    "express-session": "^1.17.1",
-    "mongoose": "^5.12.3",
-    "multer": "^1.4.2",
-    "nodemailer": "^6.4.10",
-    "bcrypt": "^5.0.0",
-    "node-schedule": "^1.3.0",
-    "socket.io": "^4.0.1",
-    "web-push": "^3.4.3"
-  },
-  devDependencies: { "nodemon": "^2.0.7" }
-};
-fs.writeFileSync('package.json', JSON.stringify(packageJsonConfig, null, 2));
+// File upload route
+app.post('/upload', upload.single('image'), (req, res) => {
+  try {
+    res.status(200).json({
+      message: 'Image uploaded successfully',
+      imagePath: `/uploads/${req.file.filename}`
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Image upload failed' });
+  }
+});
 
-// Fara uwar garken
+// ID validation route
+let usedIds = [];
+app.post('/validate-id', (req, res) => {
+  const { id } = req.body;
+  if (!id.startsWith('5')) {
+    return res.status(400).send({ success: false, message: 'ID must start with 5' });
+  }
+  if (usedIds.includes(id)) {
+    return res.status(400).send({ success: false, message: 'ID has already been used' });
+  }
+  usedIds.push(id);
+  res.status(200).send({ success: true, message: 'ID is valid and unique' });
+});
+
+// Server setup
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
