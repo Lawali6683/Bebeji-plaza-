@@ -32,7 +32,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }
+  cookie: { secure: true }
 }));
 
 // Middleware
@@ -153,6 +153,12 @@ app.post('/validate-id', (req, res) => {
   }
   usedIds.push(id);
   res.status(200).send({ success: true, message: 'ID is valid and unique' });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
 });
 
 // Server setup
