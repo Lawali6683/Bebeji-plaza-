@@ -111,7 +111,7 @@ router.post('/forgot-password', async (req, res) => {
       text: `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n
       Please click on the following link, or paste this into your browser to complete the process:\n\n
       http://localhost:3000/reset/${resetToken}\n\n
-      If you did not request this, please ignore this email and your password will remain unchanged.`
+      If you did not request this, please ignore this email and your password will remain unchanged.\n`
     };
 
     await transporter.sendMail(mailOptions);
@@ -142,38 +142,33 @@ router.post('/reset/:token', async (req, res) => {
     user.resetPasswordExpires = undefined;
 
     await user.save();
-    res.status(200).json({ msg: 'Password has been updated' });
+
+    res.status(200).json({ msg: 'Password has been reset' });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
 });
 
-// Get user profile route
-router.get('/profile', async (req, res) => {
+// Verify OTP route
+router.post('/verify-otp', async (req, res) => {
+  const { email, otp } = req.body;
+
   try {
-    if (!req.session.userId) {
-      return res.status(401).json({ msg: 'Unauthorized' });
-    }
+    const user = await User.findOne({ email });
 
-    const user = await User.findById(req.session.userId);
     if (!user) {
-      return res.status(404).json({ msg: 'User not found' });
+      return res.status(400).json({ msg: 'User not found' });
     }
 
-    res.status(200).json(user);
+    // Assume the OTP verification logic is here
+
+    user.verified = true;
+    await user.save();
+
+    res.status(200).json({ msg: 'Email verified successfully' });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
-});
-
-// Logout route
-router.post('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res.status(500).json({ error: 'Server error' });
-    }
-    res.status(200).json({ msg: 'Logged out successfully' });
-  });
 });
 
 module.exports = router;
