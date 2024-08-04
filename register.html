@@ -363,7 +363,7 @@
     </main>
 
     <script>
-        // Preview image when uploaded
+ // Preview image when uploaded
 document.getElementById('shopImage').addEventListener('change', function(event) {
     previewImage(event, 'shopImagePreview');
 });
@@ -407,7 +407,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
     const confirmPassword = document.getElementById('confirmPassword').value;
     const idCardNumber = document.getElementById('idCardNumber').value;
     const email = document.getElementById('email').value;
-    const username = document.getElementById('username').value; // Add this if you need the username
+    const username = document.getElementById('username').value;
 
     // Check if passwords match
     if (password !== confirmPassword) {
@@ -421,58 +421,46 @@ document.getElementById('registerForm').addEventListener('submit', async functio
         return;
     }
 
-    // Perform reCAPTCHA and submit form data
-    grecaptcha.ready(function() {
-        grecaptcha.execute('6LchsA8qAAAAAPIANgaOY_BASjfdSk6nqA0EFm9a', {action: 'submit'}).then(async function(token) {
-            var recaptchaResponse = document.createElement('input');
-            recaptchaResponse.type = 'hidden';
-            recaptchaResponse.name = 'recaptcha_response';
-            recaptchaResponse.value = token;
-            document.getElementById('registerForm').appendChild(recaptchaResponse);
-
-            // Validate ID number on server
-            const idResponse = await fetch('/validate-id', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ idCardNumber })
-            });
-
-            const idResult = await idResponse.json();
-
-            if (!idResult.success) {
-                alert('Wannan ID an riga an yi amfani da shi.');
-                return;
-            }
-
-            // Submit registration form data
-            const response = await fetch('/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email: email,
-                    password: password,
-                    idCardNumber: idCardNumber,
-                    recaptcha_response: token
-                })
-            });
-
-            const result = await response.json();
-
-            if (result.success) {
-                // Send OTP email
-                await sendOtpEmail(email, username);
-
-                // Redirect to OTP verification page
-                window.location.href = '/verify-otp.html';
-            } else {
-                alert(result.message);
-            }
-        });
+    // Validate ID number on server
+    const idResponse = await fetch('/validate-id', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ idCardNumber })
     });
+
+    const idResult = await idResponse.json();
+
+    if (!idResult.success) {
+        alert('Wannan ID an riga an yi amfani da shi.');
+        return;
+    }
+
+    // Submit registration form data
+    const response = await fetch('/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            email: email,
+            password: password,
+            idCardNumber: idCardNumber
+        })
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+        // Send OTP email
+        await sendOtpEmail(email, username);
+
+        // Redirect to OTP verification page
+        window.location.href = '/verify-otp.html';
+    } else {
+        alert(result.message);
+    }
 });
 
 async function sendOtpEmail(email, username) {
@@ -527,9 +515,7 @@ document.getElementById('idCardNumber').addEventListener('submit', async functio
         }
     }
 });
-
-
-    </script>
-    <script src="server.js"></script> 
+      
+          </script>   
 </body>
 </html>
